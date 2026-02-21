@@ -1,20 +1,32 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { State, Task } from '../models/task.model';
+
+export interface PagedResult<T> {
+  data: T[];
+  total: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class TaskApiService {
   private http = inject(HttpClient);
   private base = environment.apiUrl;
 
-  getTasks(page?: number, limit?: number): Observable<Task[]> {
-    let params = new HttpParams();
-    if (page && limit) {
-      params = params.set('_page', page).set('_limit', limit);
-    }
-    return this.http.get<Task[]>(`${this.base}/tasks`, { params });
+  getTasks(page: number, limit: number): Observable<PagedResult<Task>> {
+    const params = new HttpParams()
+      .set('_page', page)
+      .set('_limit', limit);
+
+    return this.http
+      .get<Task[]>(`${this.base}/tasks`, { params, observe: 'response' })
+      .pipe(
+        map((res: HttpResponse<Task[]>) => {
+          const total = Number(res.headers.get('X-Total-Count') ?? 0);
+          return { data: res.body ?? [], total };
+        })
+      );
   }
 
   getTask(id: number): Observable<Task> {

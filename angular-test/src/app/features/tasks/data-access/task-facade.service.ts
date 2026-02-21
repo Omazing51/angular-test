@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, finalize, map, of, tap } from 'rxjs';
+import { catchError, finalize, map, of, switchMap, tap } from 'rxjs';
 import { TaskApiService } from './task-api.service';
 import { TaskStoreService } from './task-store.service';
 import { Task } from '../models/task.model';
@@ -13,30 +13,63 @@ export class TaskFacade {
   readonly tasks$ = this.state$.pipe(map(s => s.tasks));
   readonly loading$ = this.state$.pipe(map(s => s.loading));
   readonly error$ = this.state$.pipe(map(s => s.error));
+  readonly page$ = this.state$.pipe(map(s => s.page));
+  readonly pageSize$ = this.state$.pipe(map(s => s.pageSize));
+  readonly total$ = this.state$.pipe(map(s => s.total));
+  readonly totalPages$ = this.state$.pipe(
+    map(s => Math.max(1, Math.ceil(s.total / s.pageSize)))
+  );
 
-  loadTasks(page?: number, limit?: number) {
+  loadPage(page: number) {
+    const { pageSize } = this.store.snapshot;
+
     this.store.setLoading(true);
     this.store.setError(null);
+    this.store.setPage(page);
 
-    return this.api.getTasks(page, limit).pipe(
-      tap(tasks => this.store.setTasks(tasks)),
-      catchError(err => {
+    return this.api.getTasks(page, pageSize).pipe(
+      tap(res => this.store.setTasks(res.data, res.total)),
+      catchError(() => {
         this.store.setError('No fue posible cargar las tareas.');
-        return of([] as Task[]);
+        this.store.setTasks([], 0);
+        return of({ data: [] as Task[], total: 0 });
       }),
       finalize(() => this.store.setLoading(false))
     );
   }
 
+  refreshCurrentPage() {
+    return this.loadPage(this.store.snapshot.page);
+  }
+
   markCompleted(task: Task) {
-    return this.api.patchTask(task.id, { completed: true });
+    this.store.setLoading(true);
+    return this.api.patchTask(task.id, { completed: true }).pipe(
+      switchMap(() => this.refreshCurrentPage()),
+      catchError(() => {
+        this.store.setError('No fue posible completar la tarea.');
+        return of(null);
+      }),
+      finalize(() => this.store.setLoading(false))
+    );
   }
 
   deleteTask(id: number) {
-    return this.api.deleteTask(id);
-  }
-
-  createTask(payload: Omit<Task, 'id'>) {
-    return this.api.createTask(payload);
+    this.store.setLoading(true);
+    return this.api.deleteTask(id).pipe(
+      switchMap(() => {
+        // Si borraste el último item de la página, retrocede una página si aplica
+        const { page, pageSize, total } = this.store.snapshot;
+        const remainingAfterDelete = Math.max(0, total - 1);
+        const totalPagesAfter = Math.max(1, Math.ceil(remainingAfterDelete / pageSize));
+        const nextPage = Math.min(page, totalPagesAfter);
+        return this.loadPage(nextPage);
+      }),
+      catchError(() => {
+        this.store.setError('No fue posible eliminar la tarea.');
+        return of(null);
+      }),
+      finalize(() => this.store.setLoading(false))
+    );
   }
 }
