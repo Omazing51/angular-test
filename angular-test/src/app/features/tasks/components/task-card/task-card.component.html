@@ -1,0 +1,30 @@
+<article class="card">
+  <header class="header">
+    <div class="title-wrap">
+      <h3 class="title">{{ task.title }}</h3>
+      <span class="badge" [class.done]="task.completed">{{ task.completed ? 'Completed' : 'Open' }}</span>
+    </div>
+
+    <div class="meta">
+      <span><strong>Due:</strong> {{ task.dueDate | date:'mediumDate' }}</span>
+      <span><strong>State:</strong> {{ currentState }}</span>
+    </div>
+  </header>
+
+  <p class="desc">{{ task.description }}</p>
+
+  <section class="notes" *ngIf="task.notes?.length">
+    <strong>Notes</strong>
+    <ul>
+      <li *ngFor="let n of task.notes; trackBy: trackByIndex">{{ n }}</li>
+    </ul>
+  </section>
+
+  <footer class="actions">
+    <a class="btn" [routerLink]="['/tasks', task.id]">Edit</a>
+    <button class="btn" (click)="onDelete()">Delete</button>
+    <button class="btn primary" [disabled]="task.completed" (click)="onComplete()">
+      Mark as completed
+    </button>
+  </footer>
+</article>
