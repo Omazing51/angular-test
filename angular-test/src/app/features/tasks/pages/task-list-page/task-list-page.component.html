@@ -1,1 +1,32 @@
-<p>task-list-page works!</p>
+<section class="page">
+  <header class="top">
+    <h1>Tasks</h1>
+    <a class="btn primary" routerLink="/tasks/new">New Task</a>
+  </header>
+
+  <p class="error" *ngIf="(error$ | async) as err">{{ err }}</p>
+  <p class="loading" *ngIf="(loading$ | async)">Loading...</p>
+
+  <div class="grid" *ngIf="(tasks$ | async) as tasks">
+    <app-task-card
+      *ngFor="let t of tasks; trackBy: trackById"
+      [task]="t"
+      (complete)="onComplete($event)"
+      (remove)="onDelete($event)"
+    />
+  </div>
+
+  <footer class="pager">
+    <ng-container *ngIf="(page$ | async) as page">
+      <ng-container *ngIf="(totalPages$ | async) as totalPages">
+        <button class="btn" type="button" (click)="goTo(page - 1)" [disabled]="page <= 1">
+          Prev
+        </button>
+        <span>Page {{ page }} / {{ totalPages }}</span>
+        <button class="btn" type="button" (click)="goTo(page + 1)" [disabled]="page >= totalPages">
+          Next
+        </button>
+      </ng-container>
+    </ng-container>
+  </footer>
+</section>

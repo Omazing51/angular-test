@@ -1,0 +1,20 @@
+<section class="box">
+  <div class="row">
+    <strong>Current state:</strong>
+    <span>{{ currentState }}</span>
+  </div>
+
+  <div class="row">
+    <label>
+      Add new state
+      <select [(ngModel)]="selected">
+        <option value="" disabled>Select...</option>
+        <option *ngFor="let s of states" [value]="s.name">{{ s.name }}</option>
+      </select>
+    </label>
+
+    <button class="btn" type="button" (click)="onAdd()" [disabled]="!selected">
+      Add
+    </button>
+  </div>
+</section>

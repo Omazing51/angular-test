@@ -1,0 +1,58 @@
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <label>
+      Title *
+      <input type="text" formControlName="title" />
+      <small class="err" *ngIf="isInvalid(form.get('title'))">Required (max 80)</small>
+    </label>
+
+    <label>
+      Due date *
+      <input type="date" formControlName="dueDate" />
+      <small class="err" *ngIf="isInvalid(form.get('dueDate'))">Required</small>
+    </label>
+  </div>
+
+  <label>
+    Description *
+    <textarea rows="4" formControlName="description"></textarea>
+    <small class="err" *ngIf="isInvalid(form.get('description'))">Required (max 500)</small>
+  </label>
+
+  <label>
+    Current state *
+    <select formControlName="state">
+      <option value="" disabled>Select...</option>
+      <option *ngFor="let s of states; trackBy: trackByIndex" [value]="s.name">
+        {{ s.name }}
+      </option>
+    </select>
+    <small class="err" *ngIf="isInvalid(form.get('state'))">Required</small>
+  </label>
+
+  <label class="checkbox">
+    <input type="checkbox" formControlName="completed" />
+    Completed
+  </label>
+
+  <section class="notes">
+    <div class="notes-head">
+      <strong>Notes *</strong>
+      <button type="button" class="btn" (click)="addNote()">+ Add note</button>
+    </div>
+
+    <div class="note" *ngFor="let ctrl of notes.controls; let i = index; trackBy: trackByIndex">
+      <input type="text" [formControl]="ctrl" placeholder="Write a note..." />
+      <button type="button" class="btn" (click)="removeNote(i)">Remove</button>
+    </div>
+
+    <small class="err" *ngIf="form.errors?.['notesRequired']">
+      Add at least one non-empty note.
+    </small>
+  </section>
+
+  <footer class="actions">
+    <button type="button" class="btn" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn primary">{{ submitLabel }}</button>
+  </footer>
+</form>

@@ -15,7 +15,7 @@ export class TaskCardComponent {
   @Input({ required: true }) task!: Task;
 
   @Output() complete = new EventEmitter<Task>();
-  @Output() remove = new EventEmitter<number>();
+  @Output() remove = new EventEmitter<string>();
 
   get currentState(): string {
     const last = this.task.stateHistory?.[this.task.stateHistory.length - 1];

@@ -1,0 +1,11 @@
+.page { max-width: 1100px; margin: 0 auto; padding: 18px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; }
+.btn { border: 1px solid #e5e7eb; background: #fff; padding: 8px 12px; border-radius: 12px; cursor: pointer; text-decoration: none; color: inherit; }
+.btn.primary { border-color: #111827; }
+.error { color: #b91c1c; margin-top: 10px; }
+.loading { margin-top: 10px; }
+
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }

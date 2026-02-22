@@ -1,1 +1,52 @@
-<p>task-detail-page works!</p>
+<!-- Loader -->
+<section class="page" *ngIf="loading">
+  <p>Loading...</p>
+</section>
+
+<!-- Error -->
+<section class="page" *ngIf="!loading && !task">
+  <p class="error">No fue posible cargar la tarea.</p>
+
+  <div class="actions">
+    <button class="btn" type="button" (click)="onCancel()">
+      Volver
+    </button>
+  </div>
+</section>
+
+<!-- Contenido -->
+<section class="page" *ngIf="!loading && task as t">
+  <header class="top">
+    <h1>Edit Task</h1>
+
+    <button
+      class="btn danger"
+      type="button"
+      (click)="onDelete()"
+    >
+      Delete
+    </button>
+  </header>
+
+  <p class="error" *ngIf="(error$ | async) as err">
+    {{ err }}
+  </p>
+
+  <!-- Estados -->
+  <app-task-state-manager
+    [task]="t"
+    [states]="states"
+    (addState)="onAddState($event)"
+  ></app-task-state-manager>
+
+  <div class="divider"></div>
+
+  <!-- Formulario -->
+  <app-task-form
+    [states]="states"
+    [initialValue]="t"
+    submitLabel="Save changes"
+    (submitForm)="onSubmit($event)"
+    (cancel)="onCancel()"
+  ></app-task-form>
+</section>

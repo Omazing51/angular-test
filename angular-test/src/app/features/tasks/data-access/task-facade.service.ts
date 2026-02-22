@@ -54,7 +54,7 @@ export class TaskFacade {
     );
   }
 
-  deleteTask(id: number) {
+  deleteTask(id: string) {
     this.store.setLoading(true);
     return this.api.deleteTask(id).pipe(
       switchMap(() => {
@@ -67,6 +67,40 @@ export class TaskFacade {
       }),
       catchError(() => {
         this.store.setError('No fue posible eliminar la tarea.');
+        return of(null);
+      }),
+      finalize(() => this.store.setLoading(false))
+    );
+  }
+
+  createTask(payload: Omit<Task, 'id'>) {
+    this.store.setLoading(true);
+    this.store.setError(null);
+
+    return this.api.createTask(payload).pipe(
+      switchMap(() => this.loadPage(1)),
+      catchError(() => {
+        this.store.setError('No fue posible crear la tarea.');
+        return of(null);
+      }),
+      finalize(() => this.store.setLoading(false))
+    );
+  }
+
+getTaskById(id: string) {
+  return this.api.getTask(id).pipe(
+    catchError(() => of(null))
+  );
+}
+
+  updateTask(id: string, payload: Task) {
+    this.store.setLoading(true);
+    this.store.setError(null);
+
+    return this.api.updateTask(id, payload).pipe(
+      switchMap(updated => this.refreshCurrentPage().pipe(map(() => updated))),
+      catchError(() => {
+        this.store.setError('No fue posible actualizar la tarea.');
         return of(null);
       }),
       finalize(() => this.store.setLoading(false))

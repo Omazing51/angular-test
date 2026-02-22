@@ -1,1 +1,14 @@
-<p>task-create-page works!</p>
+<section class="page">
+  <header class="top">
+    <h1>New Task</h1>
+  </header>
+
+  <p class="error" *ngIf="(error$ | async) as err">{{ err }}</p>
+
+  <app-task-form
+    [states]="states"
+    submitLabel="Create"
+    (submitForm)="onSubmit($event)"
+    (cancel)="onCancel()"
+  />
+</section>

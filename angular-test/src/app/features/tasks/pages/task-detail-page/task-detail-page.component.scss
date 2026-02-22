@@ -1,0 +1,6 @@
+.page { max-width: 900px; margin: 0 auto; padding: 18px; display: grid; gap: 14px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.btn { border: 1px solid #e5e7eb; background: #fff; padding: 8px 12px; border-radius: 12px; cursor: pointer; }
+.btn.danger { border-color: #b91c1c; color: #b91c1c; }
+.error { color: #b91c1c; }
+.divider { height: 1px; background: #e5e7eb; margin: 6px 0; }

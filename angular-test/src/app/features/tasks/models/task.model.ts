@@ -4,7 +4,7 @@ export interface TaskStateHistoryItem {
 }
 
 export interface Task {
-  id: number;
+  id: string;
   title: string;
   description: string;
   dueDate: string;
@@ -14,6 +14,6 @@ export interface Task {
 }
 
 export interface State {
-  id: number; 
+  id: string; 
   name: string;
 }

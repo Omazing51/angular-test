@@ -1,94 +1,110 @@
 {
   "tasks": [
     {
-      "title": "Complete Project Proposal",
-      "description": "Prepare and submit the project proposal for approval.",
-      "dueDate": "2023-12-15",
-      "completed": false,
-      "stateHistory": [
-        {"state": "new", "date": "2023-12-01"},
-        {"state": "active", "date": "2023-12-05"}
-      ],
-      "notes": [
-        "Check proposal guidelines",
-        "Include budget estimates"
-      ]
-    },
-    {
-      "title": "Design Wireframes",
-      "description": "Create wireframes for the user interface.",
-      "dueDate": "2023-12-20",
-      "completed": false,
-      "stateHistory": [
-        {"state": "new", "date": "2023-12-02"},
-        {"state": "active", "date": "2023-12-06"}
-      ],
-      "notes": [
-        "Review design patterns",
-        "Seek feedback from the team"
-      ]
-    },
-    {
-      "title": "Implement User Authentication",
-      "description": "Develop user authentication functionality.",
-      "dueDate": "2023-12-25",
-      "completed": false,
-      "stateHistory": [
-        {"state": "new", "date": "2023-12-03"},
-        {"state": "active", "date": "2023-12-07"}
-      ],
-      "notes": [
-        "Research secure authentication methods",
-        "Implement password hashing"
-      ]
-    },
-    {
       "title": "Write API Documentation",
       "description": "Document the RESTful API for external developers.",
       "dueDate": "2023-12-30",
-      "completed": false,
+      "completed": true,
       "stateHistory": [
-        {"state": "new", "date": "2023-12-04"},
-        {"state": "active", "date": "2023-12-08"}
+        {
+          "state": "new",
+          "date": "2023-12-04"
+        },
+        {
+          "state": "active",
+          "date": "2023-12-08"
+        },
+        {
+          "state": "resolved",
+          "date": "2026-02-21"
+        },
+        {
+          "state": "active",
+          "date": "2026-02-21"
+        },
+        {
+          "state": "active",
+          "date": "2026-02-21T23:54:18.861Z"
+        },
+        {
+          "state": "active",
+          "date": "2026-02-21T23:54:25.194Z"
+        }
       ],
       "notes": [
-        "Use Swagger/OpenAPI for documentation",
-        "Provide clear examples"
+        "Use Swagger/OpenAPI for documentation"
+      ],
+      "id": "2ace"
+    },
+    {
+      "id": "7f00",
+      "title": "EJEM",
+      "description": "DCSSADASDAS",
+      "dueDate": "2026-02-11",
+      "completed": true,
+      "notes": [
+        "CDDASDADASDSADSA"
+      ],
+      "stateHistory": [
+        {
+          "state": "new",
+          "date": "2026-02-21T22:39:29.156Z"
+        },
+        {
+          "state": "new",
+          "date": "2026-02-22T17:46:34.703Z"
+        },
+        {
+          "state": "new",
+          "date": "2026-02-22T17:46:48.375Z"
+        }
       ]
     },
     {
-      "title": "Bug Fixes and Testing",
-      "description": "Address reported bugs and perform thorough testing.",
-      "dueDate": "2024-01-05",
+      "id": "5e23",
+      "title": "ayyyyyyyyyyyyyyyyy",
+      "description": "ajaaaaaaaaaaam",
+      "dueDate": "2026-02-02",
       "completed": false,
-      "stateHistory": [
-        {"state": "new", "date": "2023-12-05"},
-        {"state": "active", "date": "2023-12-09"}
-      ],
       "notes": [
-        "Create test cases for critical scenarios",
-        "Perform regression testing"
-      ]
-    },
-    {
-      "title": "Project Deployment",
-      "description": "Prepare for and deploy the project to production.",
-      "dueDate": "2024-01-10",
-      "completed": false,
-      "stateHistory": [
-        {"state": "new", "date": "2023-12-06"},
-        {"state": "active", "date": "2023-12-10"}
+        "ASDASDAS"
       ],
-      "notes": [
-        "Coordinate with DevOps for deployment",
-        "Monitor performance after deployment"
+      "stateHistory": [
+        {
+          "state": "new",
+          "date": "2026-02-22T17:47:11.933Z"
+        },
+        {
+          "state": "new",
+          "date": "2026-02-22T17:47:19.393Z"
+        },
+        {
+          "state": "new",
+          "date": "2026-02-22T17:47:30.661Z"
+        },
+        {
+          "state": "new",
+          "date": "2026-02-22T17:49:55.566Z"
+        }
       ]
     }
   ],
   "states": [
-    {"name": "new"},
-    {"name": "active"},
-    {"name": "resolved"},
-    {"name": "closed"}
+    {
+      "name": "new",
+      "id": "c3c3"
+    },
+    {
+      "name": "active",
+      "id": "394d"
+    },
+    {
+      "name": "resolved",
+      "id": "a505"
+    },
+    {
+      "name": "closed",
+      "id": "b063"
+    }
   ]
 }

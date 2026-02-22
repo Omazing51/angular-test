@@ -22,7 +22,7 @@
 
   <footer class="actions">
     <a class="btn" [routerLink]="['/tasks', task.id]">Edit</a>
-    <button class="btn" (click)="onDelete()">Delete</button>
+    <button class="btn" (click)="onRemove()">Delete</button>
     <button class="btn primary" [disabled]="task.completed" (click)="onComplete()">
       Mark as completed
     </button>
